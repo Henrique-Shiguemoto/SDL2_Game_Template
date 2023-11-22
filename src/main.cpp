@@ -44,9 +44,9 @@ bool Init(){
 }
 
 void CreateWindow(){
-	if(g_Window = SDL_CreateWindow(GAME_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT, SDL_WINDOW_SHOWN)) 
+	if((g_Window = SDL_CreateWindow(GAME_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT, SDL_WINDOW_SHOWN))) 
 		std::cout << SDL_GetError() << std::endl;
-	if(g_Renderer = SDL_CreateRenderer(g_Window, -1, SDL_RENDERER_ACCELERATED))
+	if((g_Renderer = SDL_CreateRenderer(g_Window, -1, SDL_RENDERER_ACCELERATED)))
 		std::cout << SDL_GetError() << std::endl;
 }
 
