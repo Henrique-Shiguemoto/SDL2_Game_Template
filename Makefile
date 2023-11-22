@@ -16,23 +16,28 @@ DEBUGGER=gdb
 
 # build everything that needs to be built
 all: $(BINARY_FILE)
-	@echo "Compiling done..."
+	@echo "Compiling and Linking done..."
 
 $(BINARY_FILE): $(OBJECTS_FILES)
 	$(COMPILER) $(OBJECTS_FILES) -o $(BINARY_FILE) $(LIBRARY_PATH) $(LINKER_FLAGS)
 
-%.o:$(SOURCE_PATH)/%.cpp
-	@$(COMPILER) $(COMPILER_FLAGS) -o $@ -c $< $(INCLUDE_PATH)
+%.o:$(SOURCE_PATH)/%.cpp $(SOURCE_PATH)/%.h
+	$(COMPILER) $(COMPILER_FLAGS) -o $@ -c $< $(INCLUDE_PATH)
 
 # Just running the program
 .PHONY: run
-run:
+run: $(BINARY_FILE)
 	$(BINARY_FILE)
 
 # build from scratch (cleans first)
 .PHONY: everything
 everything: clean all
 	@echo "Full Build Successful..."
+
+# debugging BINARY_FILE
+.PHONY: debug
+debug: everything
+	$(DEBUGGER) $(BINARY_FILE)
 
 # clear unnecessary files
 .PHONY: clean
