@@ -18,19 +18,19 @@ unsigned char g_Green = 0;
 unsigned char g_Blue = 0;
 
 int main(){
-	if(!Init()) return 1;
-	CreateWindow();
+	if(!init()) return 1;
+	create_window();
 	
 	while(g_GameIsRunning){
-		HandleInput();
-		SimulateWorld();
-		RenderGraphics();
+		handle_input();
+		simulate_world();
+		render_graphics();
 	}
-	Quit();
+	quit();
 	return 0;
 }
 
-bool Init(){
+bool init(){
 	if(SDL_Init(SDL_INIT_VIDEO)){
 		std::cout << SDL_GetError() << std::endl;
 		return false;
@@ -43,14 +43,14 @@ bool Init(){
 	return true;
 }
 
-void CreateWindow(){
+void create_window(){
 	if((g_Window = SDL_CreateWindow(GAME_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_DEFAULT_WIDTH, WINDOW_DEFAULT_HEIGHT, SDL_WINDOW_SHOWN))) 
 		std::cout << SDL_GetError() << std::endl;
 	if((g_Renderer = SDL_CreateRenderer(g_Window, -1, SDL_RENDERER_ACCELERATED)))
 		std::cout << SDL_GetError() << std::endl;
 }
 
-void HandleInput(){
+void handle_input(){
 	SDL_Event e;
 	while(SDL_PollEvent(&e)){
 		const unsigned char* keyboardState = SDL_GetKeyboardState(NULL);
@@ -86,7 +86,7 @@ void HandleInput(){
 	}
 }
 
-void SimulateWorld(){
+void simulate_world(){
 	if(g_RButtonWasPressed) g_Red++;
     if(g_GButtonWasPressed) g_Green++;
     if(g_BButtonWasPressed) g_Blue++;
@@ -95,13 +95,13 @@ void SimulateWorld(){
 	g_BButtonWasPressed = false;
 }
 
-void RenderGraphics(){
+void render_graphics(){
 	SDL_SetRenderDrawColor(g_Renderer, g_Red, g_Green, g_Blue, 255);
 	SDL_RenderClear(g_Renderer);
 	SDL_RenderPresent(g_Renderer);
 }
 
-void Quit(){
+void quit(){
 	//Destroy resources here and quit subsystems like audio, fonts and so on...
 	SDL_DestroyWindow(g_Window);
 	SDL_DestroyRenderer(g_Renderer);
